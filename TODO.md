@@ -1,0 +1,6 @@
+- [ ] Schedules debts
+- [ ] Subscriptions
+- [ ] Dashboard
+- [ ] Groups
+- [ ] Auth
+- [ ] Invite people to a family

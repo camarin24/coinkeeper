@@ -1,38 +1,50 @@
-# sv
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+---
 
-## Creating a project
+# CoinKeeper
 
-If you're seeing this, you've probably already done this step. Congrats!
+**CoinKeeper** is a personal finance app designed to help you track your expenses, manage accounts, and gain insights into your financial habits. With features like tags, accounts, income, and expense tracking, CoinKeeper simplifies managing personal finances.
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Features
 
-# create a new project in my-app
-npx sv create my-app
-```
+- **Account Management**: Track balances across multiple accounts (bank, cash, credit, etc.)
+- **Expense & Income Tracking**: Easily log your daily transactions
+- **Tags for Categorization**: Use tags to categorize expenses and incomes
+- **Secure & Private**: Your financial data is safe and only accessible to you
 
-## Developing
+## Installation
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/camarin24/coinkeeper.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd coinkeeper
+   ```
+3. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+4. Run the app:
+   ```bash
+   pnpm start
+   ```
 
-```bash
-npm run dev
+## Usage
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+1. Set up your accounts and initial balances.
+2. Start adding transactions, categorizing them with tags for easier tracking.
+3. Review your spending and income trends.
 
-## Building
+## Contributing
 
-To create a production version of your app:
+We welcome contributions! Feel free to open an issue or submit a pull request for bug fixes, new features, or improvements.
 
-```bash
-npm run build
-```
+## License
 
-You can preview the production build with `npm run preview`.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Contact
+
+For questions or support, please reach out via GitHub Issues or contact [cm961224@gmail.com](mailto:cm961224@gmail.com).
