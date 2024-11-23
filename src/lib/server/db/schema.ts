@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
@@ -13,6 +13,9 @@ export const accounts = sqliteTable('accounts', {
 	balance: real('balance').default(0),
 	createdAt: text('createdAt').default(sql`(CURRENT_TIMESTAMP)`),
 })
+export const accountsRelations = relations(accounts, ({ many }) => ({
+	transactions: many(transactions),
+}));
 
 export const transactions = sqliteTable('transactions', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
@@ -23,3 +26,9 @@ export const transactions = sqliteTable('transactions', {
 	date: text('date').default(sql`(CURRENT_TIMESTAMP)`),
 	createdAt: text('createdAt').default(sql`(CURRENT_TIMESTAMP)`),
 })
+export const transactionRelation = relations(transactions, ({ one }) => ({
+	transactions: one(accounts, {
+		fields: [transactions.id],
+		references: [accounts.id]
+	})
+}))

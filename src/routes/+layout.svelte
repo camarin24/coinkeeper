@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { House, Settings } from 'lucide-svelte';
+	import { House, Settings, WalletCards } from 'lucide-svelte';
 	import '../app.css';
 	import NavItem from '$lib/components/ui/nav-item.svelte';
 	import Nav from '$lib/components/ui/nav.svelte';
@@ -10,9 +10,14 @@
 	<aside class="p-4 flex flex-col justify-between">
 		<Nav>
 			{#snippet items()}
-				<NavItem active>
+				<NavItem href="/">
 					{#snippet icon()}
 						<House class="w-5 h-5 z-10" />
+					{/snippet}
+				</NavItem>
+				<NavItem href="/accounts">
+					{#snippet icon()}
+						<WalletCards class="w-5 h-5 z-10" />
 					{/snippet}
 				</NavItem>
 			{/snippet}
