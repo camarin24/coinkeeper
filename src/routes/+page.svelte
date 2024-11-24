@@ -8,4 +8,15 @@
 	let open = $state(false);
 </script>
 
-Wellcome
+<div class="grid lg:grid-cols-2 gap-4 w-full">
+	<div class="card bg-base-200 shadow-md">
+		<div class="card-body">
+			<p>If a dog chews shoes whose shoes does he choose?</p>
+		</div>
+	</div>
+	<div class="card bg-base-200 shadow-md">
+		<div class="card-body">
+			<p>If a dog chews shoes whose shoes does he choose?</p>
+		</div>
+	</div>
+</div>

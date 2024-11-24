@@ -1,38 +1,63 @@
 <script lang="ts">
-	import { House, Settings, WalletCards } from 'lucide-svelte';
 	import '../app.css';
-	import NavItem from '$lib/components/ui/nav-item.svelte';
-	import Nav from '$lib/components/ui/nav.svelte';
+	import { CreditCard, House, Layers, Plus, WalletCards } from 'lucide-svelte';
 	let { children } = $props();
 </script>
 
-<div class="flex min-h-dvh">
-	<aside class="p-4 flex flex-col justify-between">
-		<Nav>
-			{#snippet items()}
-				<NavItem href="/">
-					{#snippet icon()}
-						<House class="w-5 h-5 z-10" />
-					{/snippet}
-				</NavItem>
-				<NavItem href="/accounts">
-					{#snippet icon()}
-						<WalletCards class="w-5 h-5 z-10" />
-					{/snippet}
-				</NavItem>
-			{/snippet}
-		</Nav>
-		<Nav>
-			{#snippet items()}
-				<NavItem>
-					{#snippet icon()}
-						<Settings class="w-5 h-5 z-10" />
-					{/snippet}
-				</NavItem>
-			{/snippet}
-		</Nav>
-	</aside>
-	<main class="container">
-		{@render children()}
-	</main>
+<div class="drawer lg:drawer-open">
+	<input id="my-drawer" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-side">
+		<label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+		<aside class="min-h-screen">
+			<ul class="menu text-base-content min-h-full w-56">
+				<li>
+					<a href="/">
+						<House class="w-5 h-5" />
+						Dashboard
+					</a>
+				</li>
+				<li>
+					<a href="/accounts" class="active">
+						<Layers class="w-5 h-5" />
+						Accounts
+					</a>
+				</li>
+				<li>
+					<a href="/accounts" class="">
+						<CreditCard class="w-5 h-5" />
+						Transactions
+					</a>
+				</li>
+				<li>
+					<h2 class="menu-title">Transactions</h2>
+					<button class="btn btn-sm justify-start">
+						<Plus class="w-5 h-5" />
+						New transaction</button
+					>
+					<ul>
+						<li><a>Item 1</a></li>
+						<li><a>Item 2</a></li>
+						<li><a>Item 3</a></li>
+					</ul>
+				</li>
+				<li>
+					<h2 class="menu-title">Accounts</h2>
+					<button class="btn btn-sm justify-start">
+						<Plus class="w-5 h-5" />
+						New account</button
+					>
+					<ul>
+						<li><a>Item 1</a></li>
+						<li><a>Item 2</a></li>
+						<li><a>Item 3</a></li>
+					</ul>
+				</li>
+			</ul>
+		</aside>
+	</div>
+	<div class="drawer-content">
+		<main class="container mx-auto pt-4">
+			{@render children()}
+		</main>
+	</div>
 </div>
