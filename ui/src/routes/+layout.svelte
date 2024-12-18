@@ -12,12 +12,16 @@
 		Plus,
 		Wallet
 	} from 'lucide-svelte';
+	import { goto } from '$app/navigation';
 
 	let { children } = $props();
 	onMount(() => {
 		(async function () {
-			const users = await pb.collection('test').getFullList();
-			console.log(users);
+			if (!pb.authStore.isValid) {
+				await pb.collection('users').authWithPassword('cm961224@gmail.com', 'vQLBJJrnUkG6GGv');
+				goto('/');
+			}
+			const users = await pb.collection('groups').getFullList();
 		})();
 	});
 
@@ -30,7 +34,7 @@
 
 <div class="min-h-screen bg-gray-100">
 	<!-- Home Screen -->
-	<div class="max-w-md mx-auto bg-white min-h-screen">
+	<div class="mx-auto min-h-screen max-w-md bg-white">
 		<!-- Header -->
 
 		<!-- Transactions -->
@@ -51,27 +55,27 @@
 
 		<!-- Bottom Navigation -->
 		<div class="fixed bottom-0 left-0 right-0 bg-white">
-			<div class="max-w-md mx-auto grid grid-cols-5 items-center p-4">
-				<button class="flex flex-col items-center gap-1 text-blue-600">
-					<Home class="w-6 h-6" />
+			<div class="mx-auto grid max-w-md grid-cols-5 items-center p-4">
+				<a href="/login" class="flex flex-col items-center gap-1 text-blue-600">
+					<Home class="h-6 w-6" />
 					<span class="text-xs">Home</span>
-				</button>
+				</a>
 				<button class="flex flex-col items-center gap-1 text-gray-400">
-					<History class="w-6 h-6" />
+					<History class="h-6 w-6" />
 					<span class="text-xs">History</span>
 				</button>
 				<button
 					onclick={showModal}
-					class="flex flex-col items-center justify-center w-14 h-14 bg-blue-600 rounded-full text-white -mt-6"
+					class="-mt-6 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-blue-600 text-white"
 				>
-					<Plus class="w-6 h-6" />
+					<Plus class="h-6 w-6" />
 				</button>
 				<button class="flex flex-col items-center gap-1 text-gray-400">
-					<Wallet class="w-6 h-6" />
+					<Wallet class="h-6 w-6" />
 					<span class="text-xs">Accounts</span>
 				</button>
 				<button class="flex flex-col items-center gap-1 text-gray-400">
-					<BookCopy class="w-6 h-6" />
+					<BookCopy class="h-6 w-6" />
 					<span class="text-xs">Categories</span>
 				</button>
 			</div>
@@ -79,20 +83,20 @@
 	</div>
 
 	<!-- Cards Screen -->
-	<div class="max-w-md mx-auto bg-gray-50 min-h-screen">
+	<div class="mx-auto min-h-screen max-w-md bg-gray-50">
 		<div class="p-6">
-			<div class="flex justify-between items-center mb-4">
+			<div class="mb-4 flex items-center justify-between">
 				<h1 class="text-2xl font-bold text-gray-800">Your Cards</h1>
 				<button>
-					<MoreVertical class="w-6 h-6" />
+					<MoreVertical class="h-6 w-6" />
 				</button>
 			</div>
-			<p class="text-gray-500 mb-6">2 physical card, 1 virtual card</p>
+			<p class="mb-6 text-gray-500">2 physical card, 1 virtual card</p>
 
 			<!-- Card Type Tabs -->
-			<div class="flex gap-4 mb-6">
+			<div class="mb-6 flex gap-4">
 				<button
-					class="px-6 py-2 rounded-full {cardTab === 'physical'
+					class="rounded-full px-6 py-2 {cardTab === 'physical'
 						? 'bg-blue-600 text-white'
 						: 'bg-white'}"
 					onclick={() => (cardTab = 'physical')}
@@ -100,7 +104,7 @@
 					Physical Card
 				</button>
 				<button
-					class="px-6 py-2 rounded-full {cardTab === 'virtual'
+					class="rounded-full px-6 py-2 {cardTab === 'virtual'
 						? 'bg-blue-600 text-white'
 						: 'bg-white'}"
 					onclick={() => (cardTab = 'virtual')}
@@ -110,8 +114,8 @@
 			</div>
 
 			<!-- Card Display -->
-			<div class="bg-[#1a2b4b] text-white p-6 rounded-xl mb-8">
-				<div class="flex justify-between items-start mb-12">
+			<div class="mb-8 rounded-xl bg-[#1a2b4b] p-6 text-white">
+				<div class="mb-12 flex items-start justify-between">
 					<div class="w-12">
 						<img src="/placeholder.svg" alt="Visa" class="w-full" />
 					</div>
@@ -119,39 +123,39 @@
 						<img src="/placeholder.svg" alt="Chip" class="w-full" />
 					</div>
 				</div>
-				<p class="text-xl mb-6">**** **** **** 2864</p>
+				<p class="mb-6 text-xl">**** **** **** 2864</p>
 				<div class="flex justify-between text-sm">
 					<div>
-						<p class="text-gray-400 mb-1">CARD HOLDER</p>
+						<p class="mb-1 text-gray-400">CARD HOLDER</p>
 						<p>Card Holder Name</p>
 					</div>
 					<div>
-						<p class="text-gray-400 mb-1">EXPIRES</p>
+						<p class="mb-1 text-gray-400">EXPIRES</p>
 						<p>08/22</p>
 					</div>
 					<div>
-						<p class="text-gray-400 mb-1">CVV</p>
+						<p class="mb-1 text-gray-400">CVV</p>
 						<p>826</p>
 					</div>
 				</div>
 			</div>
 
 			<!-- Card Settings -->
-			<h2 class="text-xl font-bold text-gray-800 mb-4">Card Settings</h2>
+			<h2 class="mb-4 text-xl font-bold text-gray-800">Card Settings</h2>
 			<div class="space-y-4">
 				{#each [{ icon: Wallet, label: 'Contactless Payment', enabled: true }, { icon: CreditCard, label: 'Online Payment', enabled: false }, { icon: Download, label: 'ATM Withdraws', enabled: true }] as setting}
 					{@const Icon = setting.icon}
-					<div class="flex items-center justify-between bg-white p-4 rounded-xl">
+					<div class="flex items-center justify-between rounded-xl bg-white p-4">
 						<div class="flex items-center gap-3">
-							<div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-								<Icon class="w-5 h-5 text-blue-600" />
+							<div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
+								<Icon class="h-5 w-5 text-blue-600" />
 							</div>
 							<span class="font-medium text-gray-800">{setting.label}</span>
 						</div>
-						<label class="relative inline-flex items-center cursor-pointer">
-							<input type="checkbox" class="sr-only peer" checked={setting.enabled} />
+						<label class="relative inline-flex cursor-pointer items-center">
+							<input type="checkbox" class="peer sr-only" checked={setting.enabled} />
 							<div
-								class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+								class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"
 							></div>
 						</label>
 					</div>
