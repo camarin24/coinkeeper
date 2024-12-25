@@ -1,5 +1,15 @@
 <script>
-	import { Banknote, Bell, Car, Download, Send, ShoppingBag, Wallet, Wallet2 } from 'lucide-svelte';
+	import {
+		Banknote,
+		Bell,
+		Car,
+		Cog,
+		Download,
+		Send,
+		ShoppingBag,
+		Wallet,
+		Wallet2
+	} from 'lucide-svelte';
 
 	let activeTab = 'all';
 
@@ -35,20 +45,12 @@
 </script>
 
 <div class="bg-blue-700">
-	<div class="bg-blue-700 text-white p-6">
-		<div class="flex justify-between items-center">
+	<div class="bg-blue-700 p-6 text-white">
+		<div class="flex items-center justify-between">
 			<div>
 				<h1 class="text-4xl font-bold">$2,589.50</h1>
 				<p class="text-blue-200">Available Balance</p>
 			</div>
-			<!-- <div class="flex gap-2 items-center">
-				<button class="p-2">
-					<Bell class="w-6 h-6" />
-				</button>
-				<button class="w-10 h-10 rounded-full bg-blue-600">
-					<img src="/placeholder.svg" alt="Profile" class="w-full h-full rounded-full" />
-				</button>
-			</div> -->
 		</div>
 
 		<!-- Quick Actions -->
@@ -63,35 +65,35 @@
 			{/each}
 		</div> -->
 	</div>
-	<div class="p-6 bg-base-100 rounded-t-3xl">
-		<div class="flex justify-between items-center mb-4">
+	<div class="rounded-t-3xl bg-base-100 p-6">
+		<div class="mb-4 flex items-center justify-between">
 			<h2 class="text-xl font-bold text-gray-800">Recent Transactions</h2>
 			<button class="text-blue-600">See all</button>
 		</div>
 
 		<!-- Transaction Filters -->
-		<div class="flex gap-2 mb-6">
+		<div class="mb-6 flex gap-2">
 			<button
-				class="px-4 py-2 rounded-full {activeTab === 'all' ? 'bg-gray-200' : 'bg-gray-100'}"
+				class="rounded-full px-4 py-2 {activeTab === 'all' ? 'bg-gray-200' : 'bg-gray-100'}"
 				on:click={() => (activeTab = 'all')}
 			>
 				All
 			</button>
 			<button
-				class="px-4 py-2 rounded-full {activeTab === 'income' ? 'bg-gray-200' : 'bg-gray-100'}"
+				class="rounded-full px-4 py-2 {activeTab === 'income' ? 'bg-gray-200' : 'bg-gray-100'}"
 				on:click={() => (activeTab = 'income')}
 			>
 				<span class="flex items-center gap-1">
-					<span class="w-2 h-2 rounded-full bg-green-500"></span>
+					<span class="h-2 w-2 rounded-full bg-green-500"></span>
 					Income
 				</span>
 			</button>
 			<button
-				class="px-4 py-2 rounded-full {activeTab === 'expense' ? 'bg-gray-200' : 'bg-gray-100'}"
+				class="rounded-full px-4 py-2 {activeTab === 'expense' ? 'bg-gray-200' : 'bg-gray-100'}"
 				on:click={() => (activeTab = 'expense')}
 			>
 				<span class="flex items-center gap-1">
-					<span class="w-2 h-2 rounded-full bg-red-500"></span>
+					<span class="h-2 w-2 rounded-full bg-red-500"></span>
 					Expense
 				</span>
 			</button>
@@ -103,8 +105,8 @@
 			{#each transactions as transaction}
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-3">
-						<div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-							<svelte:component this={transaction.icon} class="w-5 h-5 text-blue-600" />
+						<div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
+							<svelte:component this={transaction.icon} class="h-5 w-5 text-blue-600" />
 						</div>
 						<div>
 							<p class="font-medium text-gray-800">{transaction.category}</p>

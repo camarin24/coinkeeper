@@ -1,15 +1,21 @@
-<script>
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { pb } from '$lib/pocketbase';
 	import { Mail, Lock, Eye, EyeOff } from 'lucide-svelte';
-	import { createEventDispatcher } from 'svelte';
 
-	let email = '';
-	let password = '';
-	let showPassword = false;
+	let email = $state('');
+	let password = $state('');
+	let showPassword = $state(false);
 
-	const dispatch = createEventDispatcher();
-
-	function handleSubmit() {
-		dispatch('login', { email, password });
+	async function handleSubmit(ev: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
+		console.log('www');
+		ev.preventDefault();
+		const resp = await pb.collection('users').authWithPassword(email, password);
+		console.log(resp);
+		if (pb.authStore.isValid) {
+			goto('/');
+		} else {
+		}
 	}
 
 	function togglePasswordVisibility() {
@@ -23,7 +29,7 @@
 			<h1 class="mb-2 text-3xl font-bold">Welcome Back</h1>
 			<p class="text-blue-200">Log in to your account</p>
 		</div>
-		<form on:submit|preventDefault={handleSubmit} class="space-y-6 p-8">
+		<form onsubmit={handleSubmit} class="space-y-6 p-8">
 			<div>
 				<label for="email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
 				<div class="relative">
@@ -57,7 +63,7 @@
 					<button
 						type="button"
 						class="absolute inset-y-0 right-0 flex items-center pr-3"
-						on:click={togglePasswordVisibility}
+						onclick={togglePasswordVisibility}
 					>
 						{#if showPassword}
 							<EyeOff class="h-5 w-5 text-gray-400" />
@@ -65,22 +71,6 @@
 							<Eye class="h-5 w-5 text-gray-400" />
 						{/if}
 					</button>
-				</div>
-			</div>
-			<div class="flex items-center justify-between">
-				<div class="flex items-center">
-					<input
-						id="remember-me"
-						name="remember-me"
-						type="checkbox"
-						class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-					/>
-					<label for="remember-me" class="ml-2 block text-sm text-gray-700"> Remember me </label>
-				</div>
-				<div class="text-sm">
-					<a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-						Forgot your password?
-					</a>
 				</div>
 			</div>
 			<div>
@@ -95,7 +85,7 @@
 		<div class="px-8 pb-8 text-center">
 			<p class="text-sm text-gray-600">
 				Don't have an account?
-				<a href="#" class="font-medium text-blue-600 hover:text-blue-500">Sign up</a>
+				<a href="/" class="font-medium text-blue-600 hover:text-blue-500">Sign up</a>
 			</p>
 		</div>
 	</div>
